@@ -1,0 +1,34 @@
+import string
+import random
+
+class URLShortener:
+    def __init__(self):
+        self.url_mapping = {}
+        self.short_length = 6
+        self.characters = string.ascii_letters + string.digits
+
+    def generate_short_url(self):
+        short_url = ''.join(random.choice(self.characters) for _ in range(self.short_length))
+        return short_url
+
+    def shorten_url(self, long_url):
+        short_url = self.generate_short_url()
+        self.url_mapping[short_url] = long_url
+        return short_url
+
+    def get_long_url(self, short_url):
+        return self.url_mapping.get(short_url)
+
+if __name__ == "__main__":
+    url_shortener = URLShortener()
+
+    long_url = input("Enter the URL to shorten: ")
+    short_url = url_shortener.shorten_url(long_url)
+    print("Short URL:", short_url)
+
+    input_short_url = input("Enter the short URL to retrieve the original URL: ")
+    long_url = url_shortener.get_long_url(input_short_url)
+    if long_url:
+        print("Original URL:", long_url)
+    else:
+        print("URL not found.")
